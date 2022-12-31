@@ -1,7 +1,7 @@
 export class InvalidCardError extends Error {
-    constructor() {
+    constructor(extraMessage?: string) {
         super();
-        this.message = "Card invalid or incomplete";
+        this.message = "Card invalid or incomplete " + (extraMessage?extraMessage : "");
         this.name = "InvalidCardError"
     }
 }

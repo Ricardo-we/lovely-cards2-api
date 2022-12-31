@@ -1,27 +1,29 @@
 import BController, { ControllerConfig } from "../../../utils/Base/BController";
 import { Card, CardImage, CardMessage } from "../model";
+import { ICard, ICardMessage } from "../../../types/Cards";
 import { Request, Response } from "express";
 
+import { CardMessagesService } from "../services/CardMessagesService";
 import CardService from "../services/CardService";
 import { CloudinaryUploader } from "../../../services/file-upload/Uploaders/CloudinaryUploader";
-import { ICard } from "../../../types/Cards";
+import { IUser } from "../../../types/User";
 import { compareTwoDates } from "../../../utils/date.utils";
 import { errorResponse } from "../../../utils/controller.utils";
 
-export default class CardsController implements BController {
-    private fileUploader: CloudinaryUploader;
+export default class CardMessagesController implements BController {
+    private cardMessageService: CardMessagesService = new CardMessagesService();
+
     constructor(
         public controllerConfig: ControllerConfig,
     ) {
-        this.fileUploader = new CloudinaryUploader();
     }
 
     post = async (req: Request | any, res: Response) => {
         try {
-            const card = req.body as ICard
-            const music = req?.files.length > 0 ? req?.files[0] : card?.music || null;
-            const newCard = await CardService.createCard(card, req.user, music);
-            return res.json(newCard);
+            const user = req.user as IUser;
+            const cardMessage = req.body as ICardMessage;
+            const newCardMessage = await this.cardMessageService.createMessage(cardMessage, user);
+            return res.json(newCardMessage);
         } catch (error) {
             return res.json(errorResponse(error))
         }

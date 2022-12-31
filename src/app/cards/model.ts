@@ -79,12 +79,14 @@ oneToManyRelation(Card, CardMessage, {
         allowNull: true,
         name: "card_id",
     },
+    as: "cardMessages"
 })
 oneToManyRelation(Card, CardImage, {
     foreignKey: {
         allowNull: true,
-        name: "card_id"
+        name: "card_id",
     },
+    as: "cardImages"
 })
 
 export {

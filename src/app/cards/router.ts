@@ -1,19 +1,31 @@
 import { AuthMiddleware } from "../../services/middlewares/jwt.middleware";
 import BRouter from "../../utils/Base/BRouter";
+import CardMessagesController from "./controllers/card-messages.controller";
 import CardsController from "./controllers/cards.controller";
 
-const routeBasePath = "/cards" 
+const cardsPath = "/cards" 
+const cardMessagesPath = "/card-messages";
+
+/**** @CARDSCONTROLLER */
 const controller = new CardsController({ 
-    globalRoute: routeBasePath, 
+    globalRoute: cardsPath, 
     // globalMiddleware: AuthMiddleware,
-    routesCustomPaths: { getOne: ":cardId" } ,
+    routesCustomPaths: { getOne: ":cardId", put: ":cardId" } ,
     routesMiddlewares: {
         getOne: [],
         post: [AuthMiddleware],
         get: [AuthMiddleware],
+        put: [AuthMiddleware],
     }
 
 });
-const router = BRouter.crudRouter(routeBasePath, controller);
+const router = BRouter.crudRouter(cardsPath, controller);
 
-export default [router];
+/**** @CARD_MESSAGES_CONTROLLER AND ROUTER */
+const cardMessagesController = new CardMessagesController({
+    globalMiddleware: AuthMiddleware,
+    
+});
+const cardMessagesRouter = BRouter.crudRouter(cardMessagesPath, cardMessagesController)
+
+export default [router, cardMessagesRouter];
