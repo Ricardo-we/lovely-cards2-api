@@ -8,3 +8,9 @@ export function errorResponse(error: Error | any){
         message: error.message
     }
 }
+
+export function successResponse(successMessage?: string){
+    return {
+        message: successMessage || "Success",
+    }
+}

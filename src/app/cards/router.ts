@@ -24,7 +24,12 @@ const router = BRouter.crudRouter(cardsPath, controller);
 /**** @CARD_MESSAGES_CONTROLLER AND ROUTER */
 const cardMessagesController = new CardMessagesController({
     globalMiddleware: AuthMiddleware,
-    
+    routesCustomPaths: {
+        put: ":id",
+        getOne: ":id",
+        // get: ":cardId"
+        destroy: ":card_id/:id"
+    }   
 });
 const cardMessagesRouter = BRouter.crudRouter(cardMessagesPath, cardMessagesController)
 

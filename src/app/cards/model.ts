@@ -71,6 +71,8 @@ oneToManyRelation(User, Card, {
         allowNull:true,
         name: "user_id"
     },
+    onDelete: "cascade",
+    onUpdate: "cascade"
 })
 
 /*** @CARD -> @CardMessage || @CardImage */
@@ -79,14 +81,18 @@ oneToManyRelation(Card, CardMessage, {
         allowNull: true,
         name: "card_id",
     },
-    as: "cardMessages"
+    as: "cardMessages",
+    onDelete: "cascade",
+    onUpdate: "cascade"
 })
 oneToManyRelation(Card, CardImage, {
     foreignKey: {
         allowNull: true,
         name: "card_id",
     },
-    as: "cardImages"
+    as: "cardImages",
+    onDelete: "cascade",
+    onUpdate: "cascade"
 })
 
 export {
