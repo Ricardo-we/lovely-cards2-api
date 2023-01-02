@@ -65,7 +65,7 @@ export default class CardImagesService {
             }
         ))[1][0];
         
-        return result.toJSON();
+        return result?.toJSON();
     }
 
 }
