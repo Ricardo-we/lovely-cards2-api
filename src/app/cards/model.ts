@@ -6,6 +6,7 @@ import { oneToManyRelation } from "../../utils/Db/db.utils";
 const conn = DbRepository.getConnection("postgres");
 
 const CARD_BACKGROUND_TYPES = ["decorated_image", "image", "color"];
+const CARD_TYPES = ["book", "cards", "slides","cube", "flip"];
 
 const Card = conn.define("card", {
     id: IdField(),

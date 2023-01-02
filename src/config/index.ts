@@ -27,6 +27,7 @@ export default {
     ,
     HIDE_LOGS: false,
     APP_ROOT: path.join(__dirname, ".."),
-    apps: ["users", "cards"],
+    apps: ["users", "cards", "helpers"],
+    BULK_LIST: ["helpers"],
     JWT_HASH: process.env.JWT_HASH || ""
 }

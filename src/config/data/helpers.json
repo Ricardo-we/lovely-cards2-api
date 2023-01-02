@@ -1,0 +1,89 @@
+{
+	"helper_categories": [
+		{
+			"id": 1,
+			"name": "card_types"
+		},
+        {
+			"id": 2,
+			"name": "languages"
+		}
+	],
+	"helpers": [
+		{
+			"id": 1,
+			"code": "book",
+			"name": "Book",
+			"helper_categorie_id": 1
+		},
+		{
+			"id": 2,
+			"code": "cards",
+			"name": "Cards",
+			"helper_categorie_id": 1
+		},
+		{
+			"id": 3,
+			"code": "slides",
+			"name": "Slides",
+			"helper_categorie_id": 1
+		},
+		{
+			"id": 4,
+			"code": "cube",
+			"name": "Cube",
+			"helper_categorie_id": 1
+		},
+		{
+			"id": 5,
+			"code": "flip",
+			"name": "Flip",
+			"helper_categorie_id": 1
+		},
+		{
+			"id": 6,
+			"code": "en",
+			"name": "English",
+			"helper_categorie_id": 2
+		},
+		{
+			"id": 7,
+			"code": "es",
+			"name": "Español",
+			"helper_categorie_id": 2
+		}
+	],
+	"helper_translations": [
+		{
+			"id": 1,
+			"name": "Libro",
+			"helper_id": 1,
+			"language_id": 7
+		},
+		{
+			"id": 2,
+			"name": "Cartas",
+			"helper_id": 2,
+			"language_id": 7
+		},
+		{
+			"id": 3,
+			"name": "Slides",
+			"helper_id": 2,
+			"language_id": 7
+		},
+		{
+			"id": 4,
+			"name": "Cubo",
+			"helper_id": 2,
+			"language_id": 7
+		},
+		{
+			"id": 5,
+            "name": "Flip",
+			"helper_id": 2,
+			"language_id": 7
+		}
+	]
+}
+
