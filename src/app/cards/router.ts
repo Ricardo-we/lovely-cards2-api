@@ -1,10 +1,12 @@
 import { AuthMiddleware } from "../../services/middlewares/jwt.middleware";
 import BRouter from "../../utils/Base/BRouter";
+import CardImagesController from "./controllers/card-images.controller";
 import CardMessagesController from "./controllers/card-messages.controller";
 import CardsController from "./controllers/cards.controller";
 
 const cardsPath = "/cards" 
 const cardMessagesPath = "/card-messages";
+const cardImagesPath = "/card-images"; 
 
 /**** @CARDSCONTROLLER */
 const controller = new CardsController({ 
@@ -33,4 +35,16 @@ const cardMessagesController = new CardMessagesController({
 });
 const cardMessagesRouter = BRouter.crudRouter(cardMessagesPath, cardMessagesController)
 
-export default [router, cardMessagesRouter];
+/**** @CARD_MESSAGES_CONTROLLER AND ROUTER */
+const cardImagesController = new CardImagesController({
+    globalMiddleware: AuthMiddleware,
+    routesCustomPaths: {
+        put: ":id",
+        getOne: ":id",
+        // get: ":cardId"
+        destroy: ":card_id/:id"
+    }   
+});
+const cardImagesRouter = BRouter.crudRouter(cardImagesPath, cardImagesController)
+
+export default [router, cardMessagesRouter,cardImagesRouter];

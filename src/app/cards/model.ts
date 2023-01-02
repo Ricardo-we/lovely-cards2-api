@@ -51,6 +51,10 @@ const CardMessage =  conn.define("card_message", {
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue: "#fedc00"
+    },
+    orderNumber: {
+        type: DataTypes.INTEGER(),
+        allowNull: true,
     }
 })
 
@@ -62,8 +66,12 @@ const CardImage = conn.define("card_image", {
     },
     image_id: {
         type: DataTypes.STRING(650),
-        allowNull: false,
+        allowNull: true,
     },
+    orderNumber: {
+        type: DataTypes.INTEGER(),
+        allowNull: true,
+    }
 })
 
 oneToManyRelation(User, Card, {

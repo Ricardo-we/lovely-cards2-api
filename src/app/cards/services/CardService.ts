@@ -1,8 +1,9 @@
+import { CardDoesNotBelongToUserError, InvalidCardError } from "../../../utils/Errors/Cards.error";
+
 import { Card } from "../model";
 import { CloudinaryUploader } from "../../../services/file-upload/Uploaders/CloudinaryUploader";
 import { ICard } from "../../../types/Cards";
 import { IUser } from "../../../types/User";
-import { InvalidCardError } from "../../../utils/Errors/Cards.error";
 
 export default class CardService {
     static fileUploader = new CloudinaryUploader();
@@ -17,6 +18,7 @@ export default class CardService {
     static validateCardBelongsToUser = async (card_id: number, user: IUser): Promise<[boolean, ICard]> => {
         if(!user?.id) throw new Error("User id is required");
         const card = await Card.findOne({ where: { id: card_id, user_id: user?.id }  });
+        if(!card) throw new CardDoesNotBelongToUserError();
         return [!!card, card?.toJSON() as ICard];
     }
 

@@ -14,4 +14,12 @@ export interface ICardMessage extends SequleizeBaseModel{
     content?: string;
     color?: string
     card_id?: number;
+    orderNumber?: number;
 }
+
+export interface ICardImage extends SequleizeBaseModel {
+    image_url?: string;
+    image_id?: string;
+    card_id?: number;
+    orderNumber?: number;
+}   
