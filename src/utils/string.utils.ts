@@ -18,3 +18,7 @@ export function dashedToPascalCase(word: string) {
         .map(singleWord => firstLetterUppercase(singleWord))
         .join("");
 }
+
+export function isJson(jsonString: string){
+    return !!JSON.parse(jsonString);
+}
