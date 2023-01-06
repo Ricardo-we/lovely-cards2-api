@@ -29,7 +29,7 @@ export default class HelpersController implements BController {
             const { categorie_name = "card_types", language=null } = req.query;
             
             let result
-            if(language && language !== "en") await this.helperService.findTranslatedHelpersByCategorieName(categorie_name as string, language as string);
+            if(language && language !== "en") result = await this.helperService.findTranslatedHelpersByCategorieName(categorie_name as string, language as string);
             else result = await this.helperService.findHelpersByCategorieName(categorie_name as string);
             
             return res.json(result);

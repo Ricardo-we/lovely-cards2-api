@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
     "@types/dotenv": "^8.2.0",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/multer": "^1.4.7",
@@ -23,6 +24,7 @@
     "chalk": "4.1.2",
     "cli-spinners": "2.7.0",
     "cloudinary": "^1.33.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "i": "0.3.7",
     "jsonwebtoken": "8.5.1",

@@ -1,26 +1,27 @@
 import { DeactivatedUserError, InvalidPasswordError, InvalidUserCodeError, NotFoundUser, UserAlreadyExistsError } from "../../../utils/Errors/User.errors";
 import { FullUser, IUser } from "../../../types/User";
 import { User, UserCode } from "../model";
-import { comparePlainToEncrypted, encryptWord } from "../../../utils/crypt.utils";
+import { comparePlainToEncrypted, encryptWord, getRandomNumbers } from "../../../utils/crypt.utils";
 
 import { ComunicatorBase } from "../../../services/communication/ComunicatorBase";
 import { EmailComunicatorOptions } from "../../../services/communication/ComunicatorBase";
+import { Helper } from "../../helpers/model";
 import { generateJWT } from "../../../services/middlewares/jwt.middleware";
 
 export default class AuthService {
 
     public static sendUserCode = async (createdUser: IUser, comunicator?: ComunicatorBase) => {
-        const userCode = await UserCode.create({ user_id: createdUser.id });
-        comunicator?.send({ 
+        const userCode = await UserCode.create({ user_id: createdUser.id,code: getRandomNumbers()  });
+        comunicator?.send({
             to: createdUser.email,
-            subject: "LovelyCards", 
-            body: `Welcome to LovelyCards your code is ${userCode.getDataValue("code")} you have 10 minutes to use it` 
+            subject: "LovelyCards",
+            body: `Welcome to LovelyCards your code is ${userCode.getDataValue("code")} you have 10 minutes to use it`
         })
 
         setTimeout(() => {
             UserCode.destroy({ where: { user_id: createdUser.id } });
         }, 600000);
-        
+
         return userCode;
     }
 
@@ -41,7 +42,10 @@ export default class AuthService {
     }
 
     public static login = async (user: IUser): Promise<FullUser> => {
-        const savedUser = await User.findOne({ where: { username: user.username } });
+        const savedUser: any = await User.findOne({ 
+            where: { username: user.username }, 
+            include: "language"
+        });
         if (!savedUser) throw new NotFoundUser();
         if (!savedUser.getDataValue("isActive")) throw new DeactivatedUserError();
         const isValidPassword: boolean = comparePlainToEncrypted(user.password as string, savedUser.getDataValue("password"))
@@ -50,11 +54,11 @@ export default class AuthService {
     }
 
     public static confirmUserCode = async (user_id: number, user_code: string) => {
-        const sequelizeQuery = {where: { user_id, code: user_code }};
+        const sequelizeQuery = { where: { user_id, code: user_code } };
         const userCode = await UserCode.findOne(sequelizeQuery);
-        if(!userCode) throw new InvalidUserCodeError();
-        const user = await User.update({isActive: true},{ returning: true, where: {id: user_id} });
+        if (!userCode) throw new InvalidUserCodeError();
+        const user = await User.update({ isActive: true }, { returning: true, where: { id: user_id } });
         await UserCode.destroy(sequelizeQuery);
-        return user[1][0].toJSON(); 
+        return user[1][0].toJSON();
     }
 }

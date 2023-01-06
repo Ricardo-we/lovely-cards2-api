@@ -2,6 +2,7 @@ import { MULTER_DISKSTORAGE_CONFIG, getCloudinaryConfig } from "./src/services/f
 
 import appConfig from "./src/config/index";
 import { appUseRoutes } from "./src/utils/route.utils";
+import cors from "cors";
 import express from "express";
 import multer from "multer";
 import path from "path";
@@ -13,6 +14,7 @@ getCloudinaryConfig();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(multer({ storage: MULTER_DISKSTORAGE_CONFIG }).any());
+app.use(cors());
 
 async function main() {
     try {

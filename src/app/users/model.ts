@@ -2,6 +2,7 @@ import { oneToManyRelation, oneToOneRelation } from "../../utils/Db/db.utils";
 
 import { DataTypes } from "sequelize";
 import DbRepository from "../../services/db/DbRepository";
+import { Helper } from "../helpers/model";
 import { IdField } from "../../utils/Db/db.fields";
 import { getRandomNumbers } from "../../utils/crypt.utils";
 
@@ -70,7 +71,7 @@ const UserPlan = conn.define("user_plan", {
 oneToManyRelation(PlanTypes, UserPlan, { foreignKey: { allowNull: true, name: "plan_id" } });
 oneToManyRelation(User, UserPlan, { foreignKey: { allowNull: true, name: "user_id" } });
 oneToOneRelation(User, UserCode, { foreignKey: { allowNull: true, name: "user_id" } });
-
+oneToOneRelation(Helper, User, { as: "language", foreignKey: { allowNull: true, name: "language_id" } });
 
 export {
     User,
