@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import AuthService from "./services/AuthService";
 import EmailService from "../../services/communication/emails/EmailService";
 import { IUser } from "../../types/User";
+import { User } from "./model";
 import { errorResponse } from "../../utils/controller.utils";
 
 export default class UsersController implements BController {
@@ -28,8 +29,8 @@ export default class UsersController implements BController {
     confirmCode = async (req: Request, res: Response) => {
         try {
             const { user_id, user_code } = req.body;
-            const user = await AuthService.confirmUserCode(user_id, user_code);
-
+            let user = await AuthService.confirmUserCode(user_id, user_code);
+            user = await AuthService.getUserByUserName(user.username); 
             return res.status(200).json(AuthService.giveCredentials(user));
         } catch (error) {
             return res.json(errorResponse(error));

@@ -11,7 +11,7 @@ import { generateJWT } from "../../../services/middlewares/jwt.middleware";
 export default class AuthService {
 
     public static sendUserCode = async (createdUser: IUser, comunicator?: ComunicatorBase) => {
-        const userCode = await UserCode.create({ user_id: createdUser.id,code: getRandomNumbers()  });
+        const userCode = await UserCode.create({ user_id: createdUser.id, code: getRandomNumbers() });
         comunicator?.send({
             to: createdUser.email,
             subject: "LovelyCards",
@@ -41,16 +41,23 @@ export default class AuthService {
         };
     }
 
+    public static getUserByUserName = async (username: string) => {
+        const user = await User.findOne({
+            where: { username: username },
+        })
+        const language = await Helper.findOne({ where: { id: user?.getDataValue("language_id") } }) 
+
+        return {...user?.toJSON(), language: language?.toJSON()}
+    };
+
+
     public static login = async (user: IUser): Promise<FullUser> => {
-        const savedUser: any = await User.findOne({ 
-            where: { username: user.username }, 
-            include: "language"
-        });
+        const savedUser: any = await this.getUserByUserName(user.username);
         if (!savedUser) throw new NotFoundUser();
-        if (!savedUser.getDataValue("isActive")) throw new DeactivatedUserError();
-        const isValidPassword: boolean = comparePlainToEncrypted(user.password as string, savedUser.getDataValue("password"))
+        if (!savedUser.isActive) throw new DeactivatedUserError();
+        const isValidPassword: boolean = comparePlainToEncrypted(user.password as string, savedUser.password)
         if (!isValidPassword) throw new InvalidPasswordError();
-        return AuthService.giveCredentials(savedUser.toJSON());
+        return AuthService.giveCredentials(savedUser);
     }
 
     public static confirmUserCode = async (user_id: number, user_code: string) => {
