@@ -7,6 +7,10 @@
         {
 			"id": 2,
 			"name": "languages"
+		},
+		{
+			"id": 3,
+			"name": "card_background_types"
 		}
 	],
 	"helpers": [
@@ -51,6 +55,24 @@
 			"code": "es",
 			"name": "Español",
 			"helper_categorie_id": 2
+		},
+		{
+			"id": 8,
+			"code": "decorated_image",
+			"name": "Decorated Image",
+			"helper_categorie_id": 3
+		},
+		{
+			"id": 9,
+			"code": "image",
+			"name": "Image",
+			"helper_categorie_id": 3
+		},
+		{
+			"id": 10,
+			"code": "color",
+			"name": "Color",
+			"helper_categorie_id": 3
 		}
 	],
 	"helper_translations": [
@@ -69,19 +91,37 @@
 		{
 			"id": 3,
 			"name": "Slides",
-			"helper_id": 2,
+			"helper_id": 3,
 			"language_id": 7
 		},
 		{
 			"id": 4,
 			"name": "Cubo",
-			"helper_id": 2,
+			"helper_id": 4,
 			"language_id": 7
 		},
 		{
 			"id": 5,
             "name": "Flip",
-			"helper_id": 2,
+			"helper_id": 5,
+			"language_id": 7
+		},
+		{
+			"id": 6,
+			"name": "Imagen decorativa",
+			"helper_id": 8,
+			"language_id": 7
+		},
+		{
+			"id": 7,
+			"name": "Imagen",
+			"helper_id": 9,
+			"language_id": 7
+		},
+		{
+			"id": 8,
+			"name": "Color",
+			"helper_id": 10,
 			"language_id": 7
 		}
 	]

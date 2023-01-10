@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import DbRepository from "../../services/db/DbRepository";
+import { Helper } from "../helpers/model";
 import { IdField } from "../../utils/Db/db.fields";
 import { User } from "../users/model";
 import { oneToManyRelation } from "../../utils/Db/db.utils";
@@ -35,6 +36,14 @@ const Card = conn.define("card", {
             // validBackgroundTypes: (value: any) => CARD_BACKGROUND_TYPES.includes(value)
         },
         defaultValue: "color"
+    },
+    card_type: {
+        type: DataTypes.STRING(150),
+        allowNull: true,
+        validate:{
+            isIn: [CARD_TYPES]
+        },
+        defaultValue: "book"
     }
 })
 
@@ -83,6 +92,7 @@ oneToManyRelation(User, Card, {
     onDelete: "cascade",
     onUpdate: "cascade"
 })
+
 
 /*** @CARD -> @CardMessage || @CardImage */
 oneToManyRelation(Card, CardMessage, {

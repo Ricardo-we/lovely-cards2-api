@@ -6,6 +6,7 @@ export interface ICard extends SequleizeBaseModel {
     music_public_id?: string
     card_background: string
     card_background_type: "decorated_image" | "image" | "color"
+    card_type?: string;
     user_id?: number;
 }
 
