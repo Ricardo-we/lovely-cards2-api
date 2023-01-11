@@ -25,12 +25,15 @@ export default class CardService {
     static createValidCardObject = (user: IUser, card: ICard, uploadedMusic?: any) => {
         const isUploadedMusic = typeof uploadedMusic === "object";
 
-        return {
+        const result = {
             ...card,
             music_public_id: isUploadedMusic ? uploadedMusic?.public_id : null,
-            music: isUploadedMusic ? uploadedMusic?.url : card?.music,
             user_id: user?.id
         }
+
+        if(card?.music !== null) result.music = isUploadedMusic ? uploadedMusic?.url : card?.music
+        
+        return result;
     }
 
     static safeDeleteMusicFile = async (music_id?: string, newCardValue?: ICard, isUploadableMusic?: boolean) => {
