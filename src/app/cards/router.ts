@@ -12,12 +12,13 @@ const cardImagesPath = "/card-images";
 const controller = new CardsController({ 
     globalRoute: cardsPath, 
     // globalMiddleware: AuthMiddleware,
-    routesCustomPaths: { getOne: ":cardId", put: ":cardId" } ,
+    routesCustomPaths: { getOne: ":cardId", put: ":cardId", destroy: ":cardId" } ,
     routesMiddlewares: {
         getOne: [],
         post: [AuthMiddleware],
         get: [AuthMiddleware],
         put: [AuthMiddleware],
+        destroy: [AuthMiddleware]
     }
 
 });

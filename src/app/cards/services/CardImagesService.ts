@@ -6,6 +6,7 @@ import { IUser } from "../../../types/User";
 import { InvalidCardMessageError } from "../../../utils/Errors/CardMessage.error";
 import { NotFoundItemError } from "../../../utils/Errors/General.error";
 import { UploadApiResponse } from "cloudinary";
+import { safeLogs } from "../../../utils/log.utils";
 
 export default class CardImagesService {
     private fileUploader = new CloudinaryUploader();
@@ -51,12 +52,19 @@ export default class CardImagesService {
 
     updateCardImage = async (cardImage: ICardImage, user: IUser, imageFile?: any, cardImageId?: number | string) => {
         const oldCardImage = (await CardImage.findOne({ where: { id: cardImageId, card_id: cardImage.card_id } }))?.toJSON();
-        if(!oldCardImage) throw new NotFoundItemError("Card image not found");
-        await this.validateCardImageBelongsToUser(cardImage, user);
-        let uploadedFile: UploadApiResponse | null = null;
-        if (oldCardImage.image_id) await this.fileUploader.removeFile(oldCardImage.image_id);
-        if (typeof imageFile === "object") uploadedFile = await this.fileUploader.uploadFile(imageFile);
+        const isNewImage = oldCardImage.image_url !== cardImage.image_url || typeof imageFile !== "undefined";
 
+        if (!oldCardImage) throw new NotFoundItemError("Card image not found");
+        if(!isNewImage) return oldCardImage;
+
+        await this.validateCardImageBelongsToUser(cardImage, user);
+        
+        let uploadedFile: UploadApiResponse | null = null;
+
+        if (oldCardImage.image_id && isNewImage)
+            await this.fileUploader.removeFile(oldCardImage.image_id);
+        if (typeof imageFile === "object") uploadedFile = await this.fileUploader.uploadFile(imageFile);
+        
         const result = (await CardImage.update(
             this.createValidCardImageObject(cardImage, uploadedFile),
             {

@@ -1,12 +1,12 @@
 import BController, { ControllerConfig } from "../../../utils/Base/BController";
 import { Card, CardImage, CardMessage } from "../model";
 import { Request, Response } from "express";
+import { errorResponse, successResponse } from "../../../utils/controller.utils";
 
 import CardService from "../services/CardService";
 import { CloudinaryUploader } from "../../../services/file-upload/Uploaders/CloudinaryUploader";
 import { ICard } from "../../../types/Cards";
 import { compareTwoDates } from "../../../utils/date.utils";
-import { errorResponse } from "../../../utils/controller.utils";
 
 export default class CardsController implements BController {
     private fileUploader: CloudinaryUploader;
@@ -39,8 +39,15 @@ export default class CardsController implements BController {
         }
     }
 
-    async destroy(req: Request, res: Response) {
-
+    async destroy(req: Request | any, res: Response) {
+        try {
+            const user = req.user;
+            const cardId: number = parseInt(req.params.cardId);
+            await CardService.destroyFullCard(cardId, user?.id);
+            return res.json(successResponse())
+        } catch (error) {
+            return res.json(errorResponse(error));
+        }
     }
 
     async get(req: any, res: Response) {

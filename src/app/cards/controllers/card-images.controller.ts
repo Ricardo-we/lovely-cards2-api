@@ -38,7 +38,7 @@ export default class CardImagesController implements BController {
             const cardImageId = req.params?.id;
             const user = req.user as IUser;
             const newImageValue = req.body as ICardImage;
-            const fileImage = req.files[0];
+            const fileImage = req?.files?.[0];
             const updatedCardImage = await this.cardImageService.updateCardImage(newImageValue, user, fileImage, parseInt(cardImageId));
             return res.json(updatedCardImage);
         } catch (error) {
