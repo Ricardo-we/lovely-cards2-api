@@ -22,7 +22,7 @@ export default class UsersController implements BController {
             const createdUser = await AuthService.createUser(user, this.emailService);
             return res.status(203).json({ user_id: createdUser.id });
         } catch (error) {
-            return res.json(errorResponse(error));
+            return res.status(400).json(errorResponse(error));
         }
     }
 
@@ -33,7 +33,7 @@ export default class UsersController implements BController {
             user = await AuthService.getUserByUserName(user.username); 
             return res.status(200).json(AuthService.giveCredentials(user));
         } catch (error) {
-            return res.json(errorResponse(error));
+            return res.status(400).json(errorResponse(error));
         }
     }
 
@@ -42,7 +42,7 @@ export default class UsersController implements BController {
             const user: IUser = req.body as IUser;
             return res.status(200).json(await AuthService.login(user));
         } catch (error) {
-            return res.json(errorResponse(error));
+            return res.status(400).json(errorResponse(error));
         }
     }
 
