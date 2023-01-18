@@ -54,6 +54,7 @@ export default class CardsController implements BController {
         try {
             const userCards = await Card.findAll({
                 where: { user_id: req.user.id },
+                order: [["id", "ASC"]]
             });
             return res.json(userCards);
         } catch (error) {

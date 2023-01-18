@@ -44,6 +44,10 @@ const Card = conn.define("card", {
             isIn: [CARD_TYPES]
         },
         defaultValue: "book"
+    },
+    auto_play: {
+        type: DataTypes.BOOLEAN(),
+        defaultValue: false,
     }
 })
 
@@ -61,6 +65,11 @@ const CardMessage =  conn.define("card_message", {
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue: "#fedc00"
+    },
+    textColor: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue: "#000"
     },
     orderNumber: {
         type: DataTypes.INTEGER(),
