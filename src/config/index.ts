@@ -8,6 +8,9 @@ export default {
         username: process.env.PSQL_USER || "",
         dbName: process.env.PSQL_DB_NAME || "",
         password: process.env.PSQL_PASSWORD || "",
+        dbHost: process.env.PSQL_HOST || "localhost",
+        dbPort: process.env.PSQL_PORT || "5432",
+        connectionUrl: process.env.PSQL_DB_URL ,
     },
     CLOUDINARY_CONFIG: {
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
