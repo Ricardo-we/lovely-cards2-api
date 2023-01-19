@@ -16,15 +16,20 @@ class DbRepository {
         };
         if (connectionType === "postgres") {
             // return SqlConnector.getConnection({ connectionUrl, pool: poolConfig })
-            return SqlConnector_1.default.getConnection({
-                dialect: 'postgres',
-                host: dbHost,
-                dbName,
-                password,
-                username,
-                port: parseInt(dbPort),
-                pool: poolConfig
-            });
+            try {
+                return SqlConnector_1.default.getConnection({
+                    dialect: 'postgres',
+                    host: dbHost,
+                    dbName,
+                    password,
+                    username,
+                    port: parseInt(dbPort),
+                    pool: poolConfig
+                });
+            }
+            catch (error) {
+                return new sequelize_1.Sequelize();
+            }
         }
         return new sequelize_1.Sequelize();
     }
