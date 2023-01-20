@@ -25,7 +25,12 @@ export default class DbRepository {
                 password,
                 username,
                 port: parseInt(dbPort),
-                pool: poolConfig
+                pool: poolConfig,
+                protocol: "postgres",
+                dialectOptions: {
+                    ssl: true, 
+                    native: true
+                }
             });
                 
             } catch (error) {
